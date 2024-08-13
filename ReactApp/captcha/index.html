@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>Captcha</title>
+        <script>
+
+            var users1 = ["Pooja","Aa1@"];
+
+            var pattern=""
+            function refresh()
+            {
+                let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                pattern = ""
+                for(let i=0; i<6; i++)
+                {
+                    let index = Math.floor(Math.random() * (25 - 0 + 1)) + 0;
+                    pattern = pattern + alphabet[index];
+                }
+                document.getElementById("captcha").innerHTML = pattern;
+            }
+
+            function verify()
+            {
+                var userId = document.getElementById("userId").value;
+                var password = document.getElementById("password").value;
+                console.log(password)
+                // user id must contains character only
+                // password must contains one capital, one small, one special char
+                passPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{4,15}$/
+                charOnly = "^[a-zA-Z]*$"
+
+                if(!userId.match(charOnly))
+                {
+                    alert("User id must contain char only")
+                }
+                else if(!password.match(passPattern))
+                {
+                    alert("Password requirement not fulfilled")
+                }
+                else
+                {
+                    let userCaptcha = document.getElementById("captchaEnter").value;
+                    console.log("verify called");
+                    if(userCaptcha==pattern)
+                    {
+                        if(userId == users1[0] && password == users1[1])
+                        {
+
+                            document.getElementById("body").innerHTML  = "WELCOME <br>"+users1[0];
+                        }
+                        else
+                        {
+                            alert("Wrong Id Password")
+                        }
+                    }
+                    else
+                    {
+                        alert("Captcha not matched");
+                    }
+                    
+                    
+
+                }
+            }
+            
+            console.log(pattern);
+        </script>
+        <style>
+            .box
+            {
+                padding-top: 5.5px;
+                padding-bottom: 5.5px;
+                padding-left: 10px;
+                padding-right: 10px ;
+                margin-right: 10px;
+                margin-bottom: 12px;
+                font-weight: bold;
+                color: #308d46;
+            }
+            .button
+            {
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 18px;
+                padding-right: 18px ;
+                background-color:#308d46;
+                color: white;
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 12px;
+                
+            }
+            #main{
+                margin-top: 100px;
+                background-color: rgb(202, 165, 239);
+                margin-left: 340px;
+                margin-right: 340px;
+                padding-top: 10px;
+                padding-bottom: 20px;
+            }
+        </style>
+    </head>
+
+    <body id="body" style="font-size: 40px; text-align: center; background-color: rgb(124, 155, 246);" onload="refresh()">
+        <div id="main">
+            <h2 style="font-size: 48px;">Login Interface</h2>
+            <input class="box" type="text" id="userId" placeholder="Enter your userName"><br>
+            <input class="box" type="password" id="password" placeholder="Enter your password"><br>
+            <span style="font-size:20px ;" id="captcha" ></span> <button class="button" onclick="refresh()">Refresh</button><br>
+            <input class="box" id="captchaEnter" placeholder="Enter captcha" type="text"><br>
+            <button class="button"  onclick="verify()">Login</button>
+        </div>
+    </body>
+</html>
